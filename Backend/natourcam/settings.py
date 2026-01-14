@@ -12,6 +12,32 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 
 from pathlib import Path
 
+import os
+import platform
+
+# GDAL configuration for GeoDjango
+if os.name == 'nt':
+    # Try to find GDAL in common installation paths
+    possible_paths = [
+        r"C:\OSGeo4W64",
+        r"C:\OSGeo4W",
+        r"C:\Users\hp\AppData\Local\Programs\OSGeo4W64",
+        r"C:\Users\hp\AppData\Local\Programs\OSGeo4W",
+    ]
+    
+    OSGEO4W = None
+    for path in possible_paths:
+        if os.path.isdir(path):
+            OSGEO4W = path
+            break
+    
+    if OSGEO4W:
+        os.environ['OSGEO4W_ROOT'] = OSGEO4W
+        os.environ['GDAL_DATA'] = OSGEO4W + r"\share\gdal"
+        os.environ['PROJ_LIB'] = OSGEO4W + r"\share\proj"
+        os.environ['PATH'] = OSGEO4W + r"\bin;" + os.environ['PATH']
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 

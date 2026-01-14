@@ -2,7 +2,7 @@ from rest_framework import generics, filters
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
-# Remove geospatial imports
+# Remove GeoDjango imports for now
 from django_filters.rest_framework import DjangoFilterBackend
 from .models import TouristSite, BilingualContent
 from .serializers import TouristSiteListSerializer, TouristSiteSerializer, BilingualContentSerializer

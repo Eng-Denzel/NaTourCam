@@ -1,5 +1,5 @@
 from rest_framework import serializers
-# Remove geospatial serializer import
+# Remove GeoDjango serializer import for now
 from .models import Region, TouristSite, SiteImage, BilingualContent
 
 
@@ -21,17 +21,16 @@ class BilingualContentSerializer(serializers.ModelSerializer):
         fields = ('id', 'language', 'title', 'description', 'created_at', 'updated_at')
 
 
-class TouristSiteSerializer(GeoFeatureModelSerializer):
+class TouristSiteSerializer(serializers.ModelSerializer):
     region = RegionSerializer(read_only=True)
     images = SiteImageSerializer(many=True, read_only=True)
     bilingual_content = BilingualContentSerializer(many=True, read_only=True)
     
     class Meta:
         model = TouristSite
-        fields = ('id', 'name', 'description', 'region', 'location', 'address',
+        fields = ('id', 'name', 'description', 'region', 'latitude', 'longitude', 'address',
                   'entrance_fee', 'opening_time', 'closing_time', 'is_active',
                   'created_at', 'updated_at', 'images', 'bilingual_content')
-        geo_field = 'location'
 
 
 class TouristSiteListSerializer(serializers.ModelSerializer):
@@ -39,5 +38,5 @@ class TouristSiteListSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = TouristSite
-        fields = ('id', 'name', 'description', 'region', 'location', 'address',
+        fields = ('id', 'name', 'description', 'region', 'latitude', 'longitude', 'address',
                   'entrance_fee', 'is_active', 'created_at')
