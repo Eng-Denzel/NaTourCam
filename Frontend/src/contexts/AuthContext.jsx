@@ -23,18 +23,24 @@ export const AuthProvider = ({ children }) => {
   // Check if user is authenticated on initial load
   useEffect(() => {
     const initializeAuth = async () => {
+      console.log('Initializing auth...');
       const storedToken = localStorage.getItem('token');
       const storedUser = localStorage.getItem('user');
+      console.log('Stored token:', storedToken);
+      console.log('Stored user:', storedUser);
       
       if (storedToken && storedUser) {
         try {
           setToken(storedToken);
           setUser(JSON.parse(storedUser));
+          console.log('User set from localStorage');
           
           // Verify token is still valid
           const response = await authAPI.getUser();
           setUser(response.data);
+          console.log('User verified from API');
         } catch (err) {
+          console.error('Token verification failed:', err);
           // Token is invalid, clear storage
           localStorage.removeItem('token');
           localStorage.removeItem('user');
@@ -42,6 +48,7 @@ export const AuthProvider = ({ children }) => {
           setUser(null);
         }
       }
+      console.log('Setting loading to false');
       setLoading(false);
     };
 

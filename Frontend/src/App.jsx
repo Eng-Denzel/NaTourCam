@@ -7,11 +7,15 @@ import UserDashboard from './components/dashboard/UserDashboard';
 import SiteList from './components/tourism/SiteList';
 import SiteDetail from './components/tourism/SiteDetail';
 import BookingForm from './components/bookings/BookingForm';
+import Homepage from './components/Homepage';
+import Navbar from './components/Navbar';
+import TestComponent from './components/TestComponent';
 import './App.css';
 
 // Protected Route component
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, loading } = useAuth();
+  console.log('ProtectedRoute - isAuthenticated:', isAuthenticated, 'loading:', loading);
 
   if (loading) {
     return <div className="loading">Loading...</div>;
@@ -23,6 +27,7 @@ const ProtectedRoute = ({ children }) => {
 // Public Route component (redirects authenticated users)
 const PublicRoute = ({ children }) => {
   const { isAuthenticated, loading } = useAuth();
+  console.log('PublicRoute - isAuthenticated:', isAuthenticated, 'loading:', loading);
 
   if (loading) {
     return <div className="loading">Loading...</div>;
@@ -36,12 +41,36 @@ function App() {
     <AuthProvider>
       <Router>
         <div className="App">
+          <Navbar />
           <Routes>
-            <Route path="/" element={<Navigate to="/sites" />} />
+            <Route path="/" element={<Homepage />} />
+            
+            {/* Test route */}
+            <Route
+              path="/test"
+              element={<div>Test route working</div>}
+            />
+            
+            {/* Test homepage route */}
+            <Route
+              path="/test-homepage"
+              element={
+                <div>
+                  <h1>Homepage Test</h1>
+                  <p>If you can see this, the routing is working correctly.</p>
+                </div>
+              }
+            />
+            
+            {/* Test component route */}
+            <Route
+              path="/test-component"
+              element={<TestComponent />}
+            />
             
             {/* Public routes */}
-            <Route 
-              path="/login" 
+            <Route
+              path="/login"
               element={
                 <PublicRoute>
                   <Login />

@@ -4,8 +4,8 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 # Remove GeoDjango imports for now
 from django_filters.rest_framework import DjangoFilterBackend
-from .models import TouristSite, BilingualContent
-from .serializers import TouristSiteListSerializer, TouristSiteSerializer, BilingualContentSerializer
+from .models import TouristSite, BilingualContent, Region
+from .serializers import TouristSiteListSerializer, TouristSiteSerializer, BilingualContentSerializer, RegionSerializer
 
 
 class TouristSiteListView(generics.ListAPIView):
@@ -32,3 +32,9 @@ class BilingualContentView(generics.ListAPIView):
     permission_classes = [AllowAny]
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['site', 'language']
+
+
+class RegionListView(generics.ListAPIView):
+    queryset = Region.objects.all()
+    serializer_class = RegionSerializer
+    permission_classes = [AllowAny]

@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Create an axios instance with default configuration
 const api = axios.create({
-  baseURL: 'http://localhost:8000/api', // Django backend URL
+  baseURL: '/api', // Use proxy path
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json',
@@ -25,8 +25,12 @@ api.interceptors.request.use(
 
 // Add a response interceptor to handle errors globally
 api.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    console.log('API Response:', response);
+    return response;
+  },
   (error) => {
+    console.error('API Error:', error);
     if (error.response?.status === 401) {
       // Unauthorized, remove token and redirect to login
       localStorage.removeItem('token');
@@ -50,6 +54,7 @@ export const authAPI = {
 export const tourismAPI = {
   getSites: (params) => api.get('/tourism/sites/', { params }),
   getSite: (id) => api.get(`/tourism/sites/${id}/`),
+  getRegions: () => api.get('/tourism/regions/'),
   getContent: (params) => api.get('/tourism/content/', { params }),
 };
 

@@ -4,55 +4,51 @@ import SiteCard from './SiteCard';
 
 const SiteList = () => {
   const [sites, setSites] = useState([]);
+  const [regions, setRegions] = useState([]);
+  const [selectedRegion, setSelectedRegion] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [filters, setFilters] = useState({
-    search: '',
-    region: '',
-  });
 
   useEffect(() => {
+    const fetchRegions = async () => {
+      try {
+        const response = await tourismAPI.getRegions();
+        setRegions(response.data);
+      } catch (err) {
+        console.error('Error fetching regions:', err);
+      }
+    };
+
+    fetchRegions();
+  }, []);
+
+  useEffect(() => {
+    const fetchSites = async () => {
+      try {
+        setLoading(true);
+        console.log('Fetching sites...');
+        const response = await tourismAPI.getSites(selectedRegion);
+        console.log('Sites response:', response);
+        console.log('Sites data:', response.data);
+        setSites(response.data);
+        console.log('Sites state updated');
+      } catch (err) {
+        console.error('Error fetching sites:', err);
+        console.error('Error response:', err.response);
+        setError('Failed to fetch tourist sites: ' + (err.response?.data?.detail || err.message));
+      } finally {
+        setLoading(false);
+      }
+    };
+
     fetchSites();
-  }, [filters]);
+  }, [selectedRegion]);
 
-  const fetchSites = async () => {
-    try {
-      setLoading(true);
-      const params = {};
-      
-      if (filters.search) {
-        params.search = filters.search;
-      }
-      
-      if (filters.region) {
-        params.region = filters.region;
-      }
-      
-      const response = await tourismAPI.getSites(params);
-      setSites(response.data);
-    } catch (err) {
-      setError('Failed to fetch tourist sites');
-      console.error('Error fetching sites:', err);
-    } finally {
-      setLoading(false);
-    }
+  const handleRegionChange = (event) => {
+    setSelectedRegion(event.target.value);
   };
 
-  const handleSearchChange = (e) => {
-    setFilters({
-      ...filters,
-      search: e.target.value,
-    });
-  };
-
-  const handleRegionChange = (e) => {
-    setFilters({
-      ...filters,
-      region: e.target.value,
-    });
-  };
-
-  if (loading) {
+  if (loading && sites.length === 0) {
     return <div className="loading">Loading tourist sites...</div>;
   }
 
@@ -62,30 +58,17 @@ const SiteList = () => {
 
   return (
     <div className="site-list-container">
-      <div className="site-list-header">
-        <h2>Explore Tourist Sites</h2>
-        
-        <div className="filters">
-          <input
-            type="text"
-            placeholder="Search sites..."
-            value={filters.search}
-            onChange={handleSearchChange}
-            className="search-input"
-          />
-          
-          <select
-            value={filters.region}
-            onChange={handleRegionChange}
-            className="region-filter"
-          >
-            <option value="">All Regions</option>
-            <option value="1">Region 1</option>
-            <option value="2">Region 2</option>
-          </select>
-        </div>
+      <h2>Explore Tourist Sites</h2>
+      <div className="filters">
+        <select value={selectedRegion} onChange={handleRegionChange}>
+          <option value="">All Regions</option>
+          {regions.map((region) => (
+            <option key={region.id} value={region.id}>
+              {region.name}
+            </option>
+          ))}
+        </select>
       </div>
-      
       <div className="site-list">
         {sites.length > 0 ? (
           sites.map((site) => (
