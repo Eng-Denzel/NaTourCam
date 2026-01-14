@@ -1,15 +1,3 @@
-from rest_framework import serializers
-# Remove GeoDjango serializer import for now
-from .models import Region, TouristSite, SiteImage, BilingualContent
-
-
-class RegionSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Region
-        fields = ('id', 'name', 'code', 'description', 'created_at', 'updated_at')
-
-
-class SiteImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = SiteImage
         fields = ('id', 'image', 'caption', 'is_primary', 'created_at')

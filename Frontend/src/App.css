@@ -1,0 +1,550 @@
+/* Global Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  color: #333;
+  background-color: #f5f5f5;
+}
+
+.App {
+  min-height: 100vh;
+}
+
+/* Auth Forms */
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.auth-form {
+  background: white;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 500px;
+}
+
+.auth-form h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-row {
+  display: flex;
+  gap: 1rem;
+}
+
+.form-row .form-group {
+  flex: 1;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #555;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.2);
+}
+
+button {
+  background: #667eea;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: background 0.3s;
+  width: 100%;
+}
+
+button:hover:not(:disabled) {
+  background: #5a6fd8;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.auth-form p {
+  text-align: center;
+  margin-top: 1.5rem;
+}
+
+.auth-form a {
+  color: #667eea;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.auth-form a:hover {
+  text-decoration: underline;
+}
+
+/* Error and Loading Messages */
+.error-message {
+  background: #fee;
+  color: #c33;
+  padding: 1rem;
+  border-radius: 5px;
+  margin-bottom: 1rem;
+  border: 1px solid #fcc;
+}
+
+.loading {
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.2rem;
+  color: #667eea;
+}
+
+/* Dashboard */
+.dashboard-container {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #eee;
+}
+
+.dashboard-header h1 {
+  color: #333;
+}
+
+.logout-button {
+  background: #e74c3c;
+  padding: 0.5rem 1rem;
+  width: auto;
+}
+
+.logout-button:hover {
+  background: #c0392b;
+}
+
+.dashboard-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.summary-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.summary-card h3 {
+  color: #777;
+  margin-bottom: 0.5rem;
+}
+
+.summary-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #333;
+}
+
+.summary-value.completed {
+  color: #27ae60;
+}
+
+.summary-value.pending {
+  color: #f39c12;
+}
+
+.dashboard-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.dashboard-section {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-section h2 {
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+/* Site List */
+.site-list-container {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.site-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.site-list-header h2 {
+  color: #333;
+}
+
+.filters {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.search-input,
+.region-filter {
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.site-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+/* Site Card */
+.site-card {
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.site-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+}
+
+.site-image {
+  height: 200px;
+  overflow: hidden;
+}
+
+.site-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.site-image-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f0f0f0;
+  color: #999;
+}
+
+.site-info {
+  padding: 1.5rem;
+}
+
+.site-info h3 {
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.site-region {
+  color: #667eea;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.site-description {
+  color: #666;
+  margin-bottom: 1rem;
+}
+
+.site-price {
+  color: #27ae60;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.view-details-button {
+  display: inline-block;
+  background: #667eea;
+  color: white;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  font-weight: 600;
+  transition: background 0.3s;
+}
+
+.view-details-button:hover {
+  background: #5a6fd8;
+  color: white;
+}
+
+/* Site Detail */
+.site-detail-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.site-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.site-header h1 {
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.site-region {
+  color: #667eea;
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+
+.site-image-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.site-image-gallery img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.primary-image {
+  grid-column: span 2;
+}
+
+.site-details {
+  background: white;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.site-info-section {
+  margin-bottom: 2rem;
+}
+
+.site-info-section h2 {
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.site-details-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.detail-item {
+  background: #f9f9f9;
+  padding: 1.5rem;
+  border-radius: 8px;
+}
+
+.detail-item h3 {
+  color: #555;
+  margin-bottom: 0.5rem;
+}
+
+.detail-item p {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.bilingual-content {
+  margin-bottom: 2rem;
+}
+
+.bilingual-content h2 {
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.content-item {
+  background: #f0f8ff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.content-item:last-child {
+  margin-bottom: 0;
+}
+
+.content-item h3 {
+  color: #555;
+  margin-bottom: 0.5rem;
+}
+
+.action-buttons {
+  text-align: center;
+}
+
+.book-now-button {
+  background: #27ae60;
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+}
+
+.book-now-button:hover {
+  background: #219653;
+}
+
+/* Booking Form */
+.booking-form-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 2rem;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.booking-form-container h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+.site-summary {
+  background: #f9f9f9;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+}
+
+.site-summary h3 {
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.form-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.cancel-button {
+  background: #95a5a6;
+}
+
+.cancel-button:hover {
+  background: #7f8c8d;
+}
+
+.submit-button {
+  background: #27ae60;
+}
+
+.submit-button:hover {
+  background: #219653;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .auth-form {
+    padding: 1.5rem;
+  }
+  
+  .form-row {
+    flex-direction: column;
+    gap: 0;
+  }
+  
+  .dashboard-container,
+  .site-list-container,
+  .site-detail-container,
+  .booking-form-container {
+    padding: 1rem;
+  }
+  
+  .dashboard-header {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+  
+  .site-list-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .filters {
+    justify-content: center;
+  }
+  
+  .site-image-gallery {
+    grid-template-columns: 1fr;
+  }
+  
+  .primary-image {
+    grid-column: span 1;
+  }
+  
+  .form-actions {
+    flex-direction: column;
+  }
+}
