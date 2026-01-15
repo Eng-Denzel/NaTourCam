@@ -40,10 +40,21 @@ const Register = () => {
     // Remove password_confirm from data sent to backend
     const { password_confirm, ...registerData } = formData;
     
+    // Filter out empty fields
+    Object.keys(registerData).forEach(key => {
+      if (registerData[key] === '') {
+        delete registerData[key];
+      }
+    });
+    
+    console.log('Registering with data:', registerData);
+    
     const result = await register(registerData);
     
     if (result.success) {
       navigate('/dashboard');
+    } else {
+      console.log('Registration failed:', result.error);
     }
     setLoading(false);
   };

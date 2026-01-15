@@ -97,7 +97,29 @@ export const AuthProvider = ({ children }) => {
       
       return { success: true, user, token };
     } catch (err) {
-      const errorMessage = err.response?.data?.error || 'Registration failed';
+      console.error('Registration error:', err);
+      console.error('Error response:', err.response);
+      let errorMessage = 'Registration failed';
+      
+      if (err.response?.data) {
+        if (typeof err.response.data === 'string') {
+          errorMessage = err.response.data;
+        } else if (err.response.data.error) {
+          errorMessage = err.response.data.error;
+        } else {
+          // Handle field-specific errors
+          const errorMessages = [];
+          for (const [field, messages] of Object.entries(err.response.data)) {
+            if (Array.isArray(messages)) {
+              errorMessages.push(`${field}: ${messages.join(', ')}`);
+            } else {
+              errorMessages.push(`${field}: ${messages}`);
+            }
+          }
+          errorMessage = errorMessages.join('; ') || 'Registration failed';
+        }
+      }
+      
       setError(errorMessage);
       return { success: false, error: errorMessage };
     } finally {

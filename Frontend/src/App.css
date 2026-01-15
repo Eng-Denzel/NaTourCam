@@ -14,6 +14,9 @@ body {
 
 .App {
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding-top: calc(1rem + 2rem + 1rem); /* navbar height + padding */
 }
 
 /* Navbar styles */
@@ -21,6 +24,10 @@ body {
   background-color: #333;
   padding: 1rem 0;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
 }
 
 .nav-container {
@@ -309,7 +316,7 @@ button:disabled {
 
 .site-list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
 }
 
@@ -603,5 +610,15 @@ button:disabled {
   
   .form-actions {
     flex-direction: column;
+  }
+  
+  .site-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .site-list {
+    grid-template-columns: 1fr;
   }
 }

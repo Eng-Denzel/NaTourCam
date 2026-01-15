@@ -34,8 +34,9 @@ class TouristSiteSerializer(serializers.ModelSerializer):
 
 class TouristSiteListSerializer(serializers.ModelSerializer):
     region = RegionSerializer(read_only=True)
+    images = SiteImageSerializer(many=True, read_only=True)
     
     class Meta:
         model = TouristSite
         fields = ('id', 'name', 'description', 'region', 'latitude', 'longitude', 'address',
-                  'entrance_fee', 'is_active', 'created_at')
+                  'entrance_fee', 'is_active', 'created_at', 'images')

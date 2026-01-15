@@ -9,6 +9,7 @@ import SiteDetail from './components/tourism/SiteDetail';
 import BookingForm from './components/bookings/BookingForm';
 import Homepage from './components/Homepage';
 import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 import TestComponent from './components/TestComponent';
 import './App.css';
 
@@ -124,6 +125,7 @@ function App() {
               } 
             />
           </Routes>
+          <Footer />
         </div>
       </Router>
     </AuthProvider>
