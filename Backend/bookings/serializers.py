@@ -9,22 +9,27 @@ class BookingSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Booking
-        fields = ('id', 'user', 'tourist_site', 'tourist_site_name', 'booking_date', 
-                  'number_of_visitors', 'total_price', 'status', 'special_requests', 
+        fields = ('id', 'user', 'tourist_site', 'tourist_site_name', 'booking_date',
+                  'number_of_visitors', 'total_price', 'status', 'special_requests',
                   'created_at', 'updated_at')
         read_only_fields = ('user', 'created_at', 'updated_at')
     
     def update(self, instance, validated_data):
-        # Allow status updates only for superusers
         request = self.context.get('request')
-        if request and request.user.is_superuser:
-            instance.status = validated_data.get('status', instance.status)
         
-        # Update other fields
-        instance.booking_date = validated_data.get('booking_date', instance.booking_date)
-        instance.number_of_visitors = validated_data.get('number_of_visitors', instance.number_of_visitors)
-        instance.total_price = validated_data.get('total_price', instance.total_price)
-        instance.special_requests = validated_data.get('special_requests', instance.special_requests)
+        # Allow status updates only for superusers
+        if 'status' in validated_data:
+            if request and request.user.is_superuser:
+                instance.status = validated_data['status']
+            else:
+                # Remove status from validated_data if user is not superuser
+                validated_data.pop('status', None)
+        
+        # Update other fields if they are provided
+        for field in ['booking_date', 'number_of_visitors', 'total_price', 'special_requests', 'tourist_site']:
+            if field in validated_data:
+                setattr(instance, field, validated_data[field])
+        
         instance.save()
         return instance
 

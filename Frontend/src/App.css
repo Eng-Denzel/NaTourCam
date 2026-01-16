@@ -1432,3 +1432,24 @@ button:disabled {
   background: #c0392b;
   transform: translateY(-2px);
 }
+
+/* Language Toggle Button */
+.language-toggle {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.5rem 1rem !important;
+  border-radius: 6px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.language-toggle:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-2px);
+}
+
+.language-toggle::after {
+  display: none;
+}

@@ -1,9 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const Navbar = () => {
   const { user, logout } = useAuth();
+  const { language, toggleLanguage, t } = useLanguage();
   const navigate = useNavigate();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -47,12 +49,12 @@ const Navbar = () => {
         <ul className="nav-menu">
           <li className="nav-item">
             <Link to="/" className="nav-link">
-              Home
+              {t('nav.home')}
             </Link>
           </li>
           <li className="nav-item">
             <Link to="/sites" className="nav-link">
-              Tourist Sites
+              {t('nav.sites')}
             </Link>
           </li>
           
@@ -60,13 +62,13 @@ const Navbar = () => {
             <>
               <li className="nav-item">
                 <Link to="/dashboard" className="nav-link">
-                  Dashboard
+                  {t('nav.bookings')}
                 </Link>
               </li>
               {user.is_superuser && (
                 <li className="nav-item">
                   <Link to="/admin" className="nav-link admin-link">
-                    🛡️ Admin
+                    🛡️ {t('nav.admin')}
                   </Link>
                 </li>
               )}
@@ -88,7 +90,7 @@ const Navbar = () => {
                       onClick={closeDropdown}
                     >
                       <span className="dropdown-icon">👤</span>
-                      My Profile
+                      {t('nav.profile')}
                     </Link>
                     <Link 
                       to="/bookings" 
@@ -96,7 +98,7 @@ const Navbar = () => {
                       onClick={closeDropdown}
                     >
                       <span className="dropdown-icon">📅</span>
-                      My Bookings
+                      {t('nav.bookings')}
                     </Link>
                     <Link 
                       to="/dashboard" 
@@ -115,7 +117,7 @@ const Navbar = () => {
                       className="dropdown-item logout-item"
                     >
                       <span className="dropdown-icon">🚪</span>
-                      Logout
+                      {t('nav.logout')}
                     </button>
                   </div>
                 )}
@@ -125,16 +127,27 @@ const Navbar = () => {
             <>
               <li className="nav-item">
                 <Link to="/login" className="nav-link">
-                  Login
+                  {t('nav.login')}
                 </Link>
               </li>
               <li className="nav-item">
                 <Link to="/register" className="nav-link">
-                  Register
+                  {t('nav.register')}
                 </Link>
               </li>
             </>
           )}
+          
+          {/* Language Toggle Button */}
+          <li className="nav-item">
+            <button 
+              onClick={toggleLanguage} 
+              className="nav-link btn-link language-toggle"
+              title={language === 'en' ? 'Switch to French' : 'Passer à l\'anglais'}
+            >
+              {language === 'en' ? '🇫🇷 FR' : '🇬🇧 EN'}
+            </button>
+          </li>
         </ul>
       </div>
     </nav>
