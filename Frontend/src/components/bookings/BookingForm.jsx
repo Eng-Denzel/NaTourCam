@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { bookingsAPI } from '../../services/api';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
+import { bookingsAPI, tourismAPI } from '../../services/api';
 
-const BookingForm = ({ site }) => {
+const BookingForm = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { id: siteId } = useParams();
+  const [site, setSite] = useState(location.state?.site || null);
   
   const [formData, setFormData] = useState({
     tourist_site: siteId || site?.id,
@@ -14,6 +16,31 @@ const BookingForm = ({ site }) => {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  // Fetch site details if not passed via state
+  useEffect(() => {
+    if (siteId && !site) {
+      const fetchSite = async () => {
+        try {
+          const response = await tourismAPI.getSite(siteId);
+          setSite(response.data);
+        } catch (err) {
+          console.error('Error fetching site:', err);
+        }
+      };
+      fetchSite();
+    }
+  }, [siteId, site]);
+
+  // Update formData when site is loaded
+  useEffect(() => {
+    if (site && site.id) {
+      setFormData(prev => ({
+        ...prev,
+        tourist_site: site.id
+      }));
+    }
+  }, [site]);
 
   const handleChange = (e) => {
     setFormData({
@@ -28,6 +55,13 @@ const BookingForm = ({ site }) => {
     setError(null);
 
     try {
+      // Validate that we have a site ID
+      if (!formData.tourist_site) {
+        setError('Site information is missing. Please try again.');
+        setLoading(false);
+        return;
+      }
+
       // Calculate total price (this would typically come from the backend)
       const totalPrice = site?.entrance_fee 
         ? site.entrance_fee * formData.number_of_visitors 
@@ -38,7 +72,11 @@ const BookingForm = ({ site }) => {
         total_price: totalPrice,
       };
 
+      console.log('Submitting booking data:', bookingData);
+
       const response = await bookingsAPI.createBooking(bookingData);
+      
+      console.log('Booking response:', response);
       
       if (response.status === 201) {
         // Booking created successfully - redirect to bookings page
@@ -46,8 +84,10 @@ const BookingForm = ({ site }) => {
         navigate('/bookings');
       }
     } catch (err) {
-      setError('Failed to create booking. Please try again.');
+      const errorMessage = err.response?.data?.message || err.response?.data?.error || 'Failed to create booking. Please try again.';
+      setError(errorMessage);
       console.error('Booking error:', err);
+      console.error('Error response:', err.response?.data);
     } finally {
       setLoading(false);
     }

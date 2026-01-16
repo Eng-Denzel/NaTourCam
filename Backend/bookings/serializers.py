@@ -5,10 +5,13 @@ from accounts.models import User
 
 
 class BookingSerializer(serializers.ModelSerializer):
+    tourist_site_name = serializers.CharField(source='tourist_site.name', read_only=True)
+    
     class Meta:
         model = Booking
-        fields = ('id', 'user', 'tourist_site', 'booking_date', 'number_of_visitors',
-                  'total_price', 'status', 'special_requests', 'created_at', 'updated_at')
+        fields = ('id', 'user', 'tourist_site', 'tourist_site_name', 'booking_date', 
+                  'number_of_visitors', 'total_price', 'status', 'special_requests', 
+                  'created_at', 'updated_at')
         read_only_fields = ('user', 'status', 'created_at', 'updated_at')
 
 

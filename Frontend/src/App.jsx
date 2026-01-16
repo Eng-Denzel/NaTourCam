@@ -8,6 +8,7 @@ import SiteList from './components/tourism/SiteList';
 import SiteDetail from './components/tourism/SiteDetail';
 import BookingForm from './components/bookings/BookingForm';
 import BookingList from './components/bookings/BookingList';
+import Profile from './components/profile/Profile';
 import Homepage from './components/Homepage';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -131,6 +132,15 @@ function App() {
               element={
                 <ProtectedRoute>
                   <BookingList />
+                </ProtectedRoute>
+              }
+            />
+            
+            <Route
+              path="/profile"
+              element={
+                <ProtectedRoute>
+                  <Profile />
                 </ProtectedRoute>
               }
             />

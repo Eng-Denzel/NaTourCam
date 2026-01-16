@@ -81,15 +81,7 @@ const Navbar = () => {
                       onClick={closeDropdown}
                     >
                       <span className="dropdown-icon">👤</span>
-                      View Profile
-                    </Link>
-                    <Link 
-                      to="/profile/edit" 
-                      className="dropdown-item"
-                      onClick={closeDropdown}
-                    >
-                      <span className="dropdown-icon">✏️</span>
-                      Edit Profile
+                      My Profile
                     </Link>
                     <Link 
                       to="/bookings" 
@@ -98,6 +90,14 @@ const Navbar = () => {
                     >
                       <span className="dropdown-icon">📅</span>
                       My Bookings
+                    </Link>
+                    <Link 
+                      to="/dashboard" 
+                      className="dropdown-item"
+                      onClick={closeDropdown}
+                    >
+                      <span className="dropdown-icon">📊</span>
+                      Dashboard
                     </Link>
                     <div className="dropdown-divider"></div>
                     <button 
