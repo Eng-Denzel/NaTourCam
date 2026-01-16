@@ -41,8 +41,9 @@ const BookingForm = ({ site }) => {
       const response = await bookingsAPI.createBooking(bookingData);
       
       if (response.status === 201) {
-        // Booking created successfully
-        navigate('/dashboard');
+        // Booking created successfully - redirect to bookings page
+        alert('Booking created successfully!');
+        navigate('/bookings');
       }
     } catch (err) {
       setError('Failed to create booking. Please try again.');

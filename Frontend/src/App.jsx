@@ -7,6 +7,7 @@ import UserDashboard from './components/dashboard/UserDashboard';
 import SiteList from './components/tourism/SiteList';
 import SiteDetail from './components/tourism/SiteDetail';
 import BookingForm from './components/bookings/BookingForm';
+import BookingList from './components/bookings/BookingList';
 import Homepage from './components/Homepage';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -107,22 +108,31 @@ function App() {
               element={<SiteDetail />} 
             />
             
-            <Route 
-              path="/bookings/new/:id" 
+            <Route
+              path="/bookings/new/:id"
               element={
                 <ProtectedRoute>
                   <BookingForm />
                 </ProtectedRoute>
-              } 
+              }
             />
             
-            <Route 
-              path="/bookings/new" 
+            <Route
+              path="/bookings/new"
               element={
                 <ProtectedRoute>
                   <BookingForm />
                 </ProtectedRoute>
-              } 
+              }
+            />
+            
+            <Route
+              path="/bookings"
+              element={
+                <ProtectedRoute>
+                  <BookingList />
+                </ProtectedRoute>
+              }
             />
           </Routes>
           <Footer />

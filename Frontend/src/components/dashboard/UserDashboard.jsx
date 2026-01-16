@@ -42,9 +42,12 @@ const UserDashboard = () => {
     <div className="dashboard-container">
       <div className="dashboard-header">
         <h1>Welcome, {user?.first_name || user?.username}!</h1>
-        <Logout />
-      </div>
 
+      </div>
+      <div className="dashboard-header">
+        <h2>Here is a summary of your bookings:</h2>
+        
+      </div>
       <div className="dashboard-summary">
         <div className="summary-card">
           <h3>Total Bookings</h3>

@@ -37,12 +37,13 @@ const Register = () => {
       return;
     }
     
-    // Remove password_confirm from data sent to backend
-    const { password_confirm, ...registerData } = formData;
+    // Create registration data with password_confirm included
+    const registerData = { ...formData };
     
-    // Filter out empty fields
+    // Filter out empty optional fields (but keep required fields even if empty)
+    const requiredFields = ['email', 'username', 'first_name', 'last_name', 'password', 'password_confirm'];
     Object.keys(registerData).forEach(key => {
-      if (registerData[key] === '') {
+      if (!requiredFields.includes(key) && registerData[key] === '') {
         delete registerData[key];
       }
     });
