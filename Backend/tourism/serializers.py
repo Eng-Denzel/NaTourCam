@@ -40,3 +40,35 @@ class TouristSiteListSerializer(serializers.ModelSerializer):
         model = TouristSite
         fields = ('id', 'name', 'description', 'region', 'latitude', 'longitude', 'address',
                   'entrance_fee', 'is_active', 'created_at', 'images')
+
+
+class AdminTouristSiteUpdateSerializer(serializers.ModelSerializer):
+    """Serializer for admin to update tourist site status and details"""
+    
+    class Meta:
+        model = TouristSite
+        fields = ('id', 'name', 'description', 'region', 'latitude', 'longitude', 'address',
+                  'entrance_fee', 'opening_time', 'closing_time', 'is_active')
+        read_only_fields = ('id',)
+    
+    def update(self, instance, validated_data):
+        # Update all fields
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+        instance.save()
+        return instance
+
+
+class AdminTouristSiteCreateSerializer(serializers.ModelSerializer):
+    """Serializer for admin to create new tourist sites"""
+    
+    class Meta:
+        model = TouristSite
+        fields = ('id', 'name', 'description', 'region', 'latitude', 'longitude', 'address',
+                  'entrance_fee', 'opening_time', 'closing_time', 'is_active')
+        read_only_fields = ('id',)
+    
+    def create(self, validated_data):
+        # Create new tourist site
+        site = TouristSite.objects.create(**validated_data)
+        return site

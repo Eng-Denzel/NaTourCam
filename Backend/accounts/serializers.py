@@ -11,8 +11,8 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ('id', 'email', 'username', 'first_name', 'last_name', 
                   'phone_number', 'language', 'date_of_birth', 'is_verified', 
-                  'created_at', 'updated_at', 'password')
-        read_only_fields = ('id', 'is_verified', 'created_at', 'updated_at')
+                  'is_superuser', 'created_at', 'updated_at', 'password')
+        read_only_fields = ('id', 'is_verified', 'is_superuser', 'created_at', 'updated_at')
         extra_kwargs = {
             'first_name': {'required': False},
             'last_name': {'required': False},
@@ -78,3 +78,24 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         user.set_password(password)
         user.save()
         return user
+
+
+class AdminUserUpdateSerializer(serializers.ModelSerializer):
+    """Serializer for admin to update user status and permissions"""
+    
+    class Meta:
+        model = User
+        fields = ('id', 'email', 'username', 'first_name', 'last_name', 
+                  'is_active', 'is_verified', 'is_staff', 'is_superuser')
+        read_only_fields = ('id', 'email', 'username')
+    
+    def update(self, instance, validated_data):
+        # Only allow updating specific fields
+        instance.is_active = validated_data.get('is_active', instance.is_active)
+        instance.is_verified = validated_data.get('is_verified', instance.is_verified)
+        instance.is_staff = validated_data.get('is_staff', instance.is_staff)
+        instance.is_superuser = validated_data.get('is_superuser', instance.is_superuser)
+        instance.first_name = validated_data.get('first_name', instance.first_name)
+        instance.last_name = validated_data.get('last_name', instance.last_name)
+        instance.save()
+        return instance

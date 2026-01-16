@@ -11,10 +11,18 @@ class BookingListView(generics.ListCreateAPIView):
     permission_classes = [IsAuthenticated]
     
     def get_queryset(self):
+        # Admins can see all bookings, regular users only their own
+        if self.request.user.is_superuser:
+            return Booking.objects.all()
         return Booking.objects.filter(user=self.request.user)
     
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+    
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context['request'] = self.request
+        return context
 
 
 class BookingDetailView(generics.RetrieveUpdateDestroyAPIView):
@@ -22,7 +30,15 @@ class BookingDetailView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAuthenticated]
     
     def get_queryset(self):
+        # Admins can access all bookings, regular users only their own
+        if self.request.user.is_superuser:
+            return Booking.objects.all()
         return Booking.objects.filter(user=self.request.user)
+    
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context['request'] = self.request
+        return context
 
 
 class PaymentDetailView(generics.RetrieveAPIView):

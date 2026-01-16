@@ -63,6 +63,13 @@ const Navbar = () => {
                   Dashboard
                 </Link>
               </li>
+              {user.is_superuser && (
+                <li className="nav-item">
+                  <Link to="/admin" className="nav-link admin-link">
+                    🛡️ Admin
+                  </Link>
+                </li>
+              )}
               <li className="nav-item profile-dropdown" ref={dropdownRef}>
                 <button 
                   onClick={toggleDropdown} 

@@ -4,6 +4,7 @@ import { AuthProvider, useAuth } from './contexts/AuthContext.jsx';
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 import UserDashboard from './components/dashboard/UserDashboard';
+import AdminDashboard from './components/admin/AdminDashboard';
 import SiteList from './components/tourism/SiteList';
 import SiteDetail from './components/tourism/SiteDetail';
 import BookingForm from './components/bookings/BookingForm';
@@ -141,6 +142,15 @@ function App() {
               element={
                 <ProtectedRoute>
                   <Profile />
+                </ProtectedRoute>
+              }
+            />
+            
+            <Route
+              path="/admin"
+              element={
+                <ProtectedRoute>
+                  <AdminDashboard />
                 </ProtectedRoute>
               }
             />

@@ -48,6 +48,8 @@ export const authAPI = {
   logout: () => api.post('/auth/logout/'),
   getUser: () => api.get('/auth/users/me/'),
   updateUser: (userData) => api.put('/auth/users/me/', userData),
+  getUsers: () => api.get('/auth/users/'),  // Admin only
+  adminUpdateUser: (userId, userData) => api.patch(`/auth/users/${userId}/update/`, userData),  // Admin only
 };
 
 // Tourism API calls
@@ -56,6 +58,13 @@ export const tourismAPI = {
   getSite: (id) => api.get(`/tourism/sites/${id}/`),
   getRegions: () => api.get('/tourism/regions/'),
   getContent: (params) => api.get('/tourism/content/', { params }),
+  adminCreateSite: (siteData) => api.post('/tourism/sites/create/', siteData),  // Admin only
+  adminUpdateSite: (siteId, siteData) => api.patch(`/tourism/sites/${siteId}/update/`, siteData),  // Admin only
+  adminUploadSiteImage: (siteId, formData) => api.post(`/tourism/sites/${siteId}/images/upload/`, formData, {
+    headers: { 'Content-Type': 'multipart/form-data' }
+  }),  // Admin only
+  adminDeleteSiteImage: (imageId) => api.delete(`/tourism/images/${imageId}/delete/`),  // Admin only
+  adminSetPrimaryImage: (imageId) => api.patch(`/tourism/images/${imageId}/set-primary/`),  // Admin only
 };
 
 // Bookings API calls
