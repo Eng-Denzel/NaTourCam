@@ -23,6 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/auth/', include('accounts.urls')),
     path('api/tourism/', include('tourism.urls')),
+    path('api/tourism/', include('tourism.urls_ddd')),  # DDD-based endpoints
     path('api/bookings/', include('bookings.urls')),
 ]
 
