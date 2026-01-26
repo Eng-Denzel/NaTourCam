@@ -1,3 +1,0 @@
-"""
-Infrastructure layer - Technical implementations
-"""
